@@ -1,0 +1,61 @@
+site_name: rageval
+site_description: Framework-agnostic RAG evaluation with debug-first scores
+site_url: https://YOUR_GITHUB_USERNAME.github.io/rageval
+repo_url: https://github.com/YOUR_GITHUB_USERNAME/rageval
+repo_name: YOUR_GITHUB_USERNAME/rageval
+
+theme:
+  name: material
+  logo: assets/logo/logo-mark.png
+  favicon: assets/logo/logo-mark.png
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quickstart: getting-started/quickstart.md
+    - Your First Evaluation: getting-started/first-evaluation.md
+  - Metrics:
+    - Overview: metrics/overview.md
+    - Faithfulness: metrics/faithfulness.md
+    - Context Precision: metrics/context_precision.md
+    - Answer Relevancy: metrics/answer_relevancy.md
+    - Context Recall: metrics/context_recall.md
+    - Noise Sensitivity: metrics/noise_sensitivity.md
+    - Answer Completeness: metrics/answer_completeness.md
+    - Contradiction Detector: metrics/contradiction_detector.md
+  - Judges:
+    - Overview: judges/overview.md
+    - OpenAI: judges/openai.md
+    - Anthropic: judges/anthropic.md
+    - Gemini: judges/gemini.md
+    - Ollama: judges/ollama.md
+    - Groq: judges/groq.md
+    - Heuristic: judges/heuristic.md
+  - Advanced:
+    - Batch Evaluation: advanced/batch.md
+    - RAG Pipeline Tracing: advanced/tracing.md
+    - Regression Tracking: advanced/regression.md
+    - Consistency Analysis: advanced/consistency.md
+    - Production Monitoring: advanced/autoeval.md
+    - Failure Taxonomy: advanced/taxonomy.md
+    - Chunk Analysis: advanced/chunks.md
+    - MCP Server: advanced/mcp.md
+  - CI/CD Integration: cicd.md
+  - API Reference: api-reference.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - admonition
+  - tables

@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rageval"
+version = "0.5.0"
+description = "RAG evaluation with evidence — see which sentence hallucinated, not just a score"
+authors = [
+    { name="Sujal Sonawane", email="sujalsonawane28@gmail.com" }
+]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+keywords = ["rag", "llm", "evaluation", "hallucination", "langchain", "llamaindex"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "sentence-transformers>=2.2",
+    "numpy>=1.24",
+    "scikit-learn>=1.3",
+    "typer>=0.9",
+    "rich>=13.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sujalsonawane/rageval"
+Repository = "https://github.com/sujalsonawane/rageval"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0"
+]
+anthropic = [
+    "anthropic>=0.20"
+]
+openai = [
+    "openai>=1.0"
+]
+gemini = [
+    "google-generativeai>=0.5"
+]
+ollama = [
+    "httpx>=0.24"
+]
+cohere = [
+    "cohere>=5.0"
+]
+groq = [
+    "groq>=0.9"
+]
+mcp = [
+    "mcp>=1.0"
+]
+all = [
+    "anthropic>=0.20",
+    "openai>=1.0",
+    "google-generativeai>=0.5",
+    "cohere>=5.0",
+    "groq>=0.9",
+    "httpx>=0.24",
+]
+
+[project.scripts]
+rageval = "rageval.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rageval*"]
+exclude = ["site*", "docs*", "tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+rageval = ["py.typed"]

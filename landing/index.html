@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rageval — RAG evaluation that tells you why</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Every score comes with the specific claims that failed. Not just faithfulness: 0.43 — but which sentence hallucinated.">
+    <meta property="og:title" content="rageval — RAG evaluation that tells you why">
+    <meta property="og:description" content="Every score comes with the specific claims that failed. Not just faithfulness: 0.43 — but which sentence hallucinated.">
+    <meta property="og:image" content="https://sujalsonawane.github.io/rageval/assets/social/og-image.png">
+    <meta property="og:url" content="https://sujalsonawane.github.io/rageval">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="rageval — RAG evaluation that tells you why">
+    <meta name="twitter:description" content="Every score comes with the specific claims that failed.">
+    <meta name="twitter:image" content="https://sujalsonawane.github.io/rageval/assets/social/og-image.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb top-left"></div>
+        <div class="glow-orb bottom-right"></div>
+    </div>
+
+    <nav class="navbar glass">
+        <div class="container nav-content">
+            <img src="../assets/logo/logo-dark.png" alt="rageval" class="logo">
+            <div class="nav-links">
+                <a href="https://sujalsonawane.github.io/rageval" target="_blank">Documentation</a>
+                <a href="https://github.com/sujalsonawane/rageval" target="_blank">GitHub</a>
+                <a href="https://pypi.org/project/rageval" target="_blank">PyPI</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1 class="headline">RAG evaluation that tells you why.</h1>
+            <p class="subheadline">
+                Every score comes with the specific claims that failed.<br>
+                Not just <span class="highlight-code">faithfulness: 0.43</span> — but which sentence hallucinated.
+            </p>
+            <div class="cta-group">
+                <div class="terminal-install glass">
+                    <code>pip install rageval[all]</code>
+                    <button id="copy-btn" class="copy-btn" aria-label="Copy install command">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+                <a href="https://sujalsonawane.github.io/rageval/getting-started/quickstart/" class="btn-primary">Read the Docs</a>
+            </div>
+        </section>
+
+        <section class="code-showcase glass">
+            <div class="code-header">
+                <div class="mac-buttons">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="filename">catch_hallucination.py</div>
+            </div>
+            <pre class="code-block language-python"><code>from rageval import evaluate, RAGSample
+from rageval.metrics.faithfulness import Faithfulness
+from rageval.judges.anthropic_judge import AnthropicJudge
+
+result = evaluate(
+    sample=RAGSample(
+        query="Who wrote Romeo and Juliet?",
+        retrieved_docs=["Romeo and Juliet is a tragedy written by William Shakespeare."],
+        answer="Romeo and Juliet was written by Charles Dickens.",
+    ),
+    metrics=[Faithfulness(judge=AnthropicJudge(), threshold=0.8)],
+)
+
+print(result.summary())</code></pre>
+            
+            <div class="terminal-output">
+                <code>-------------------------------------------------------
+Query: Who wrote Romeo and Juliet?
+Overall: 0.00 | FAILED | 1240ms
+-------------------------------------------------------
+<span class="fail-text">[FAIL] faithfulness : 0.00 (threshold=0.80)</span>
+Reasoning: 1 of 1 claims could not be verified from the context.
+ Evidence:
+ - <span class="error-text">FACTUAL_ERROR</span>: 'Romeo and Juliet was written by Charles Dickens'
+   (severity: 1.0) — Context states William Shakespeare
+-------------------------------------------------------</code>
+            </div>
+        </section>
+
+        <section class="coverage-diagram glass" style="margin-bottom: 4rem;">
+            <h2 class="coverage-title">Metric Coverage by Pipeline Layer</h2>
+            <div class="pipeline-grid">
+                <!-- Row 1 -->
+                <div class="pipeline-node">User Query</div>
+                <div class="pipeline-connector"></div>
+                <div class="metrics-group"></div>
+
+                <!-- Row 2 -->
+                <div class="pipeline-node">Knowledge Base / Documents</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill kb-metric">ChunkQualityAnalyzer</span>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="pipeline-node">Retriever (vector search / BM25)</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill ret-metric">ContextPrecision</span>
+                    <span class="metric-pill ret-metric">ContextRecall</span>
+                    <span class="metric-pill ret-metric">NoiseSensitivity</span>
+                </div>
+                
+                <!-- Row 4 -->
+                <div class="pipeline-node">Reranker (optional)</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill ret-metric">ContextPrecision (post-rerank)</span>
+                </div>
+
+                <!-- Row 5 -->
+                <div class="pipeline-node">LLM Generator</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill gen-metric">Faithfulness</span>
+                    <span class="metric-pill gen-metric">ContradictionDetector</span>
+                    <span class="metric-pill gen-metric">AnswerCompleteness</span>
+                </div>
+
+                <!-- Row 6 -->
+                <div class="pipeline-node">Final Answer</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill ans-metric">AnswerRelevancy</span>
+                    <span class="metric-pill ans-metric">ConsistencyAnalyzer</span>
+                </div>
+
+                <!-- Row 7 -->
+                <div class="pipeline-node">Production Traffic</div>
+                <div class="pipeline-connector dashed"></div>
+                <div class="metrics-group">
+                    <span class="metric-pill prod-metric">AutoEval (sampling)</span>
+                    <span class="metric-pill prod-metric">SemanticDriftDetector</span>
+                </div>
+            </div>
+            <div class="coverage-footer">All metrics work with Simple RAG · Graph RAG · Agentic RAG · Hybrid RAG</div>
+        </section>
+        <section class="metrics-carousel-section">
+            <h2 class="coverage-title">7 Specialized Metrics</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn prev-btn" aria-label="Previous">←</button>
+                <div class="carousel-track" id="metric-track">
+                    <!-- Metric 1 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Faithfulness</h3>
+                            <span class="metric-pill gen-metric">Generator</span>
+                        </div>
+                        <p>Does the answer make claims supported by the retrieved context? If this fails, your LLM is hallucinating facts.</p>
+                    </div>
+                    <!-- Metric 2 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Context Precision</h3>
+                            <span class="metric-pill ret-metric">Retriever</span>
+                        </div>
+                        <p>What fraction of the retrieved documents were actually useful? If this fails, your retriever is returning noise.</p>
+                    </div>
+                    <!-- Metric 3 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Answer Relevancy</h3>
+                            <span class="metric-pill ans-metric">Final Answer</span>
+                        </div>
+                        <p>Does the answer actually address the original user query? Catches when the LLM goes on an unprompted tangent.</p>
+                    </div>
+                    <!-- Metric 4 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Context Recall</h3>
+                            <span class="metric-pill ret-metric">Retriever</span>
+                        </div>
+                        <p>Did the retriever find all the necessary information to answer the question? (Requires ground truth).</p>
+                    </div>
+                    <!-- Metric 5 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Noise Sensitivity</h3>
+                            <span class="metric-pill ret-metric">Retriever</span>
+                        </div>
+                        <p>Measures how severely your LLM's accuracy degrades when irrelevant documents are injected into the context.</p>
+                    </div>
+                    <!-- Metric 6 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Answer Completeness</h3>
+                            <span class="metric-pill gen-metric">Generator</span>
+                        </div>
+                        <p>Does the final answer cover all the relevant facts present in the retrieved context, or did it leave things out?</p>
+                    </div>
+                    <!-- Metric 7 -->
+                    <div class="metric-slide glass">
+                        <div class="metric-header">
+                            <h3>Contradiction Detector</h3>
+                            <span class="metric-pill gen-metric">Generator</span>
+                        </div>
+                        <p>Specifically checks if the LLM's generated answer directly contradicts any statements made in the context.</p>
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" aria-label="Next">→</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card glass">
+                <h3>7 Supported Judges</h3>
+                <p>You aren't locked into OpenAI. Evaluate your pipelines using Anthropic Claude, Google Gemini, Groq (Llama 3), Cohere, Ollama (100% local and private), or our zero-cost local heuristic judge.</p>
+            </div>
+            <div class="feature-card glass">
+                <h3>Built for CI/CD</h3>
+                <p>Returns exit code 1 if metrics drop below thresholds. Track regressions across builds with the built-in SQLite RunTracker. One line in GitHub Actions blocks bad deployments.</p>
+            </div>
+            <div class="feature-card glass">
+                <h3>Production Grade</h3>
+                <p>Batch evaluation with thread pooling. RAGTracer for step-level debugging. ConsistencyAnalyzer for paraphrase robustness. FailureTaxonomyBuilder to cluster 1,000 failures into 5 actionable bug types.</p>
+            </div>
+        </section>
+
+        <!-- Interactive Architecture Explorer -->
+        <section class="architecture-explorer glass">
+            <div class="explorer-header">
+                <h2>Architecture Explorer</h2>
+                <p>Click the tabs to explore how rageval works under the hood.</p>
+            </div>
+            
+            <div class="explorer-layout">
+                <!-- Sidebar Tabs -->
+                <div class="explorer-sidebar">
+                    <button class="tab-btn active" data-tab="tab-input">Input & Output</button>
+                    <button class="tab-btn" data-tab="tab-core">Core & Metrics</button>
+                    <button class="tab-btn" data-tab="tab-judges">Judges</button>
+                    <button class="tab-btn" data-tab="tab-advanced">Advanced Features</button>
+                    <button class="tab-btn" data-tab="tab-observability">Observability & CLI</button>
+                </div>
+
+                <!-- Content Panes -->
+                <div class="explorer-content">
+                    
+                    <!-- TAB 1: Input & Output -->
+                    <div class="pane active" id="tab-input">
+                        <div class="pane-grid">
+                            <div class="arch-box box-input">
+                                <h4>RAGSample</h4>
+                                <ul>
+                                    <li>query: str</li>
+                                    <li>retrieved_docs: list[str]</li>
+                                    <li>answer: str</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-input">
+                                <h4>AgenticRAGSample</h4>
+                                <ul>
+                                    <li>original_query: str</li>
+                                    <li>steps: list[AgentStep]</li>
+                                    <li>final_answer: str</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-output" style="grid-column: 1 / -1;">
+                                <h4>EvalResult</h4>
+                                <ul>
+                                    <li>sample: RAGSample</li>
+                                    <li>metric_results: dict[str, MetricResult]</li>
+                                    <li>overall_score: float</li>
+                                    <li>passed: bool</li>
+                                    <li>failed_metrics() -> list</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: Core & Metrics -->
+                    <div class="pane" id="tab-core">
+                        <div class="pane-grid">
+                            <div class="arch-box box-core" style="grid-column: 1 / -1;">
+                                <h4>pipeline.py</h4>
+                                <ul>
+                                    <li>evaluate(sample, metrics)</li>
+                                    <li>batch_evaluate(samples, metrics) -> parallel threadpool</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-metric">
+                                <h4>Faithfulness</h4>
+                                <p class="arch-tag">Generator · 2 LLM calls</p>
+                            </div>
+                            <div class="arch-box box-metric">
+                                <h4>ContextPrecision</h4>
+                                <p class="arch-tag">Retriever · 1 call/doc</p>
+                            </div>
+                            <div class="arch-box box-metric">
+                                <h4>AnswerRelevancy</h4>
+                                <p class="arch-tag">Final Answer · 1 LLM call</p>
+                            </div>
+                            <div class="arch-box box-metric">
+                                <h4>ContradictionDetector</h4>
+                                <p class="arch-tag">Generator · 1 LLM call</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: Judges -->
+                    <div class="pane" id="tab-judges">
+                        <div class="pane-grid">
+                            <div class="arch-box box-judge" style="grid-column: 1 / -1;">
+                                <h4>BaseJudge (Adapter Pattern)</h4>
+                                <ul>
+                                    <li>abstract complete(prompt, system)</li>
+                                    <li>complete_json(prompt) -> dict (auto-retry parsing)</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-judge"><h4>AnthropicJudge</h4><p class="arch-tag">claude-3.5-haiku</p></div>
+                            <div class="arch-box box-judge"><h4>OpenAIJudge</h4><p class="arch-tag">gpt-4o-mini</p></div>
+                            <div class="arch-box box-judge"><h4>GeminiJudge</h4><p class="arch-tag">gemini-1.5-flash</p></div>
+                            <div class="arch-box box-judge"><h4>GroqJudge</h4><p class="arch-tag">llama-3.1-8b</p></div>
+                            <div class="arch-box box-judge"><h4>OllamaJudge</h4><p class="arch-tag">localhost local</p></div>
+                            <div class="arch-box box-judge"><h4>HeuristicJudge</h4><p class="arch-tag">all-MiniLM-L6-v2</p></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: Advanced Features -->
+                    <div class="pane" id="tab-advanced">
+                        <div class="pane-grid">
+                            <div class="arch-box box-advanced">
+                                <h4>ConsistencyAnalyzer</h4>
+                                <ul>
+                                    <li>Runs pipeline on query + paraphrases</li>
+                                    <li>Detects contradictions across answers</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-advanced">
+                                <h4>FailureTaxonomyBuilder</h4>
+                                <ul>
+                                    <li>Greedy clustering of 1,000 failures</li>
+                                    <li>Generates bug names & fix suggestions</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-advanced">
+                                <h4>SemanticDriftDetector</h4>
+                                <ul>
+                                    <li>Zero LLM calls, pure embeddings</li>
+                                    <li>Detects uncovered production queries</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-advanced">
+                                <h4>ChunkQualityAnalyzer</h4>
+                                <ul>
+                                    <li>Zero LLM calls, pure heuristics</li>
+                                    <li>Detects broken context & sparse tokens</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 5: Observability & CLI -->
+                    <div class="pane" id="tab-observability">
+                        <div class="pane-grid">
+                            <div class="arch-box box-cli">
+                                <h4>RAGTracer & RunTracker</h4>
+                                <ul>
+                                    <li>Persists traces to SQLite (.rageval/runs.db)</li>
+                                    <li>rageval history -> displays run table</li>
+                                    <li>rageval diff RUN_A RUN_B -> detects regressions</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-cli">
+                                <h4>PromptVersionControl</h4>
+                                <ul>
+                                    <li>rageval prompts register NAME</li>
+                                    <li>rageval prompts compare A B</li>
+                                    <li>Runs two-sample z-test for significance</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-cli">
+                                <h4>AutoEval (Production)</h4>
+                                <ul>
+                                    <li>@autoeval.monitor decorator</li>
+                                    <li>Background thread, never blocks app</li>
+                                    <li>Samples traffic and alerts on regressions</li>
+                                </ul>
+                            </div>
+                            <div class="arch-box box-cli">
+                                <h4>MCP Server</h4>
+                                <ul>
+                                    <li>rageval serve</li>
+                                    <li>Connects directly to Cursor, Windsurf, Claude</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>MIT Licensed. Built by <a href="https://github.com/sujalsonawane" target="_blank">Sujal Sonawane</a>.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
