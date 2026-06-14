@@ -48,7 +48,6 @@ def create_server():
     """
     try:
         from mcp.server import Server
-        from mcp.server.stdio import stdio_server
         from mcp import types
     except ImportError:
         raise ImportError(
