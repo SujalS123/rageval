@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/SujalS123/rageval/actions"><img src="https://img.shields.io/github/actions/workflow/status/SujalS123/rageval/ci.yml?branch=main" alt="Tests"></a>
-  <a href="https://pypi.org/project/rageval/"><img src="https://img.shields.io/pypi/v/rageval.svg" alt="PyPI"></a>
+  <a href="https://pypi.org/project/rageval-core/"><img src="https://img.shields.io/pypi/v/rageval-core.svg" alt="PyPI"></a>
 </p>
 
 <p align="center">

@@ -20,7 +20,7 @@ Quickstart:
     print(result.summary())
 
 Documentation: https://SujalS123.github.io/rageval
-PyPI: https://pypi.org/project/rageval
+PyPI: https://pypi.org/project/rageval-core
 """
 
 from rageval.core.sample import RAGSample
