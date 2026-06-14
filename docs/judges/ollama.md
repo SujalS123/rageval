@@ -13,7 +13,7 @@ judge = OllamaJudge(model="llama3", base_url="http://localhost:11434")
 ## Install
 
 ```bash
-pip install rageval[ollama]
+pip install rageval-core[ollama]
 ```
 
 Also install Ollama from [ollama.ai](https://ollama.ai) and pull a model:

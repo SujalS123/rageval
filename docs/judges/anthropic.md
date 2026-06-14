@@ -12,7 +12,7 @@ judge = AnthropicJudge(api_key="sk-ant-...")        # explicit key
 ## Install
 
 ```bash
-pip install rageval[anthropic]
+pip install rageval-core[anthropic]
 ```
 
 ## Set API key

@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install rageval[anthropic]
+      - run: pip install rageval-core[anthropic]
       - name: Evaluate RAG pipeline
         run: rageval run eval_data.json --judge anthropic --threshold 0.8
         env:

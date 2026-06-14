@@ -10,7 +10,7 @@ When enabled, your AI assistant can:
 ## Installation
 
 ```bash
-pip install rageval[mcp]
+pip install rageval-core[mcp]
 ```
 
 ## Configuration

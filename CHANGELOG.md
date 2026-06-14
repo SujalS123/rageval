@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.5.0 — current
+## v0.5.1 — current
 
 ### Added
 - ConsistencyAnalyzer — measures answer consistency across query paraphrases

@@ -53,4 +53,4 @@ I built this because I wasted two weeks manually reading RAG outputs to debug a 
 
 Check it out on GitHub, drop a star if you find it useful, and let me know what you think! 
 [Link to GitHub]
-`pip install rageval`
+`pip install rageval-core`

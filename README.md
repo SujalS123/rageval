@@ -17,7 +17,7 @@ not just `faithfulness: 0.43`, but which sentence hallucinated,
 classified by type, rated by severity.
 
 ```bash
-pip install rageval
+pip install rageval-core
 ```
 
 ```text
@@ -142,10 +142,10 @@ sample = RAGSample(
 |---|---|---|---|
 | AnthropicJudge | Claude | Per token | built-in |
 | OpenAIJudge | GPT-4o / mini | Per token | built-in |
-| GeminiJudge | Gemini | Per token | `pip install rageval[gemini]` |
-| GroqJudge | Llama 3 on Groq | Free tier | `pip install rageval[groq]` |
-| OllamaJudge | Any local model | Free | `pip install rageval[ollama]` |
-| CohereJudge | Command R | Per token | `pip install rageval[cohere]` |
+| GeminiJudge | Gemini | Per token | `pip install rageval-core[gemini]` |
+| GroqJudge | Llama 3 on Groq | Free tier | `pip install rageval-core[groq]` |
+| OllamaJudge | Any local model | Free | `pip install rageval-core[ollama]` |
+| CohereJudge | Command R | Per token | `pip install rageval-core[cohere]` |
 | HeuristicJudge | Local embeddings | Free | built-in |
 
 Swap judges by changing one line. No metric code changes required.
@@ -192,15 +192,15 @@ stats = summary(results)
 ## Installation
 
 ```bash
-pip install rageval
+pip install rageval-core
 ```
 
 ```bash
-pip install rageval[gemini]   # Google Gemini judge
-pip install rageval[groq]     # Groq judge (free tier)
-pip install rageval[ollama]   # Local Ollama judge
-pip install rageval[cohere]   # Cohere judge
-pip install rageval[mcp]      # MCP server for AI coding assistants
+pip install rageval-core[gemini]   # Google Gemini judge
+pip install rageval-core[groq]     # Groq judge (free tier)
+pip install rageval-core[ollama]   # Local Ollama judge
+pip install rageval-core[cohere]   # Cohere judge
+pip install rageval-core[mcp]      # MCP server for AI coding assistants
 ```
 
 Python 3.10 or higher required.

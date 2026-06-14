@@ -13,7 +13,7 @@ judge = GroqJudge(model="llama-3.1-8b-instant")            # default, fastest
 ## Install
 
 ```bash
-pip install rageval[groq]
+pip install rageval-core[groq]
 ```
 
 ## Set API key

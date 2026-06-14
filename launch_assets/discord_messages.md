@@ -27,5 +27,5 @@ A lot of RAG eval tools force you to use OpenAI or have really clunky integratio
 
 Most importantly: it returns the exact sentence that caused a metric to fail, not just a float score. 
 
-Check it out: https://github.com/SujalS123/rageval (`pip install rageval[ollama]`)
+Check it out: https://github.com/SujalS123/rageval (`pip install rageval-core[ollama]`)
 Let me know if you run into any issues running it with your local setups!

@@ -3,7 +3,7 @@
 ## Basic install
 
 ```bash
-pip install rageval
+pip install rageval-core
 ```
 
 The base install includes the HeuristicJudge (free, local embeddings) and all evaluation metrics. No API key required to start.
@@ -11,24 +11,24 @@ The base install includes the HeuristicJudge (free, local embeddings) and all ev
 ## With a specific judge
 
 ```bash
-pip install rageval[anthropic]   # Anthropic Claude
-pip install rageval[openai]      # OpenAI GPT-4o / GPT-4o-mini
-pip install rageval[gemini]      # Google Gemini
-pip install rageval[groq]        # Llama 3 on Groq (free tier)
-pip install rageval[ollama]      # Any local Ollama model
-pip install rageval[cohere]      # Cohere Command R
+pip install rageval-core[anthropic]   # Anthropic Claude
+pip install rageval-core[openai]      # OpenAI GPT-4o / GPT-4o-mini
+pip install rageval-core[gemini]      # Google Gemini
+pip install rageval-core[groq]        # Llama 3 on Groq (free tier)
+pip install rageval-core[ollama]      # Any local Ollama model
+pip install rageval-core[cohere]      # Cohere Command R
 ```
 
 ## Everything
 
 ```bash
-pip install rageval[all]
+pip install rageval-core[all]
 ```
 
 ## MCP server
 
 ```bash
-pip install rageval[mcp]   # rageval as an MCP tool for AI coding assistants
+pip install rageval-core[mcp]   # rageval as an MCP tool for AI coding assistants
 ```
 
 ## Requirements

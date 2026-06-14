@@ -512,10 +512,10 @@ Exits with code 1 if overall pass rate is below threshold. This is the CI/CD int
 |---|---|---|---|---|
 | `OpenAIJudge` | OpenAI API | Per token | built-in | Production evaluation |
 | `AnthropicJudge` | Anthropic API | Per token | built-in | Production evaluation |
-| `GeminiJudge` | Google Gemini API | Per token | `pip install rageval[gemini]` | Production evaluation |
-| `CohereJudge` | Cohere API | Per token | `pip install rageval[cohere]` | Production evaluation |
-| `GroqJudge` | Groq API | Free tier | `pip install rageval[groq]` | Development / CI pipelines |
-| `OllamaJudge` | Local Ollama | Free | `pip install rageval[ollama]` | Air-gapped / private evaluation |
+| `GeminiJudge` | Google Gemini API | Per token | `pip install rageval-core[gemini]` | Production evaluation |
+| `CohereJudge` | Cohere API | Per token | `pip install rageval-core[cohere]` | Production evaluation |
+| `GroqJudge` | Groq API | Free tier | `pip install rageval-core[groq]` | Development / CI pipelines |
+| `OllamaJudge` | Local Ollama | Free | `pip install rageval-core[ollama]` | Air-gapped / private evaluation |
 | `HeuristicJudge` | Local embeddings | Free | built-in | Development iteration |
 
 ---

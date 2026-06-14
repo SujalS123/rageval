@@ -79,7 +79,7 @@ rageval comes with production-grade tools:
 rageval is open-source and MIT-licensed. 
 
 ```bash
-pip install rageval
+pip install rageval-core
 ```
 
 Check out the [GitHub repo](https://github.com/SujalS123/rageval) and drop a star if you find it useful. I built this to solve a pain point I experienced firsthand, and I'd love to hear your feedback on it. Let me know what you think in the comments!

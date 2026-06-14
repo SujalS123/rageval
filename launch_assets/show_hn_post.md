@@ -14,7 +14,7 @@ A few other design decisions I made:
 2. **Pluggable Judges:** You aren't forced to use OpenAI. It supports Anthropic, Gemini, Cohere, Groq, and Ollama (for 100% local evaluation).
 3. **Actionable Production Tools:** It includes a `FailureTaxonomyBuilder` that clusters batch evaluation failures by root cause, and a `ConsistencyAnalyzer` to detect paraphrase instability.
 
-It's MIT licensed and available via `pip install rageval`. 
+It's MIT licensed and available via `pip install rageval-core`. 
 
 Repo: https://github.com/SujalS123/rageval
 Docs: https://SujalS123.github.io/rageval/

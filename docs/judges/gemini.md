@@ -11,7 +11,7 @@ judge = GeminiJudge(model="gemini-1.5-pro")        # higher accuracy
 ## Install
 
 ```bash
-pip install rageval[gemini]
+pip install rageval-core[gemini]
 ```
 
 ## Set API key

@@ -23,10 +23,10 @@ Metrics call `judge.complete_json()`. The base class handles JSON extraction, ma
 |---|---|---|---|
 | AnthropicJudge | Claude | Per token | built-in |
 | OpenAIJudge | GPT-4o / GPT-4o-mini | Per token | built-in |
-| GeminiJudge | Gemini | Per token | pip install rageval[gemini] |
-| GroqJudge | Llama 3 on Groq | Free tier | pip install rageval[groq] |
-| OllamaJudge | Any local model | Free | pip install rageval[ollama] |
-| CohereJudge | Command R | Per token | pip install rageval[cohere] |
+| GeminiJudge | Gemini | Per token | pip install rageval-core[gemini] |
+| GroqJudge | Llama 3 on Groq | Free tier | pip install rageval-core[groq] |
+| OllamaJudge | Any local model | Free | pip install rageval-core[ollama] |
+| CohereJudge | Command R | Per token | pip install rageval-core[cohere] |
 | HeuristicJudge | Local embeddings | Free | built-in |
 
 ## Writing a custom judge

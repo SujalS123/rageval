@@ -12,7 +12,7 @@ judge = OpenAIJudge(api_key="sk-...")        # explicit key
 ## Install
 
 ```bash
-pip install rageval[openai]
+pip install rageval-core[openai]
 ```
 
 ## Set API key

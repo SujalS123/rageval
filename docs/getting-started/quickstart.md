@@ -5,7 +5,7 @@ This example catches a real hallucination. The answer says Charles Dickens wrote
 ## Install
 
 ```bash
-pip install rageval[anthropic]
+pip install rageval-core[anthropic]
 ```
 
 ## Set your API key
