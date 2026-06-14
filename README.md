@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/logo/logo.png" alt="rageval logo" width="300">
+  <img src="https://raw.githubusercontent.com/SujalS123/rageval/main/docs/assets/logo/logo.png" alt="rageval logo" width="300">
 </p>
 
 RAG evaluation tells you a score.

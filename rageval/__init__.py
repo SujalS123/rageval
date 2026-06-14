@@ -38,7 +38,7 @@ from rageval.prompt_vc import PromptVersionControl
 from rageval.drift import SemanticDriftDetector
 from rageval.explainer import ExplainabilityReporter
 
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 
 __all__ = [
     "RAGSample",

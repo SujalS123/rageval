@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rageval-core"
-version = "0.5.1"
+version = "0.5.2"
 description = "RAG evaluation with evidence â€” see which sentence hallucinated, not just a score"
 authors = [
     { name="Sujal Sonawane", email="SujalS12328@gmail.com" }
