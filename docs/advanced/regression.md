@@ -14,7 +14,7 @@ tracker = RunTracker()  # creates .rageval/runs.db in current directory
 
 ```python
 results = batch_evaluate(samples=samples, metrics=metrics)
-tracker.save_run(name="v2.3-deploy", results=results)
+tracker.save_run(run_name="v2.3-deploy", results=results)
 ```
 
 ## CLI commands

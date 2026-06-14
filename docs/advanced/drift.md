@@ -23,7 +23,9 @@ baseline_queries = [
     "When is the next payday?",
     "How do I enroll in health insurance?",
 ]
-detector.fit_baseline(baseline_queries)
+detector.set_baseline(baseline_queries)
+# We must also set the knowledge base for coverage math
+detector.set_knowledge_base(["Your knowledge base docs..."])
 
 # 2. Analyze recent production queries
 recent_queries = [
@@ -33,12 +35,11 @@ recent_queries = [
     "Do I need to come into the office on Tuesdays?", # Drift!
 ]
 
-report = detector.analyze(recent_queries)
+report = detector.detect(recent_queries)
 
 print(f"Drift Score: {report.drift_score}")
 print("New Clusters Identified:")
-for cluster in report.new_clusters:
-    print(f"- {cluster['theme']} ({cluster['count']} queries)")
+print(report.summary())
 ```
 
 ## The Report Output

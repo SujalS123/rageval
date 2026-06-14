@@ -14,14 +14,14 @@ monitor = AutoEval(
     metrics=[Faithfulness(judge=judge, threshold=0.8)],
     sample_rate=0.1,          # evaluate 10% of queries
     alert_fn=my_alert,        # called when rolling score drops below threshold
-    rolling_window=100,       # rolling average over last 100 evaluated queries
+    window_size=100,       # rolling average over last 100 evaluated queries
 )
 ```
 
 ## Using the decorator
 
 ```python
-@monitor.watch
+@autoeval.monitor
 def my_rag_pipeline(query: str) -> tuple[list[str], str]:
     docs = retriever.search(query)
     answer = llm.generate(query, docs)

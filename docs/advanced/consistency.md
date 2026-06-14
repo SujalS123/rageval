@@ -31,12 +31,12 @@ analyzer = ConsistencyAnalyzer(judge=judge)
 
 # 3. Test a query for consistency
 report = analyzer.analyze(
-    base_query="What is the speed of light?",
+    query="What is the speed of light?",
     pipeline_fn=my_rag_pipeline,
-    num_paraphrases=3  # It will generate 3 variations of the query
+    paraphrases=["Why did the 2008 financial crisis happen?", "What were the causes of the 2008 recession?"]  # It will generate 3 variations of the query
 )
 
-print(f"Consistency Score: {report.score}")
+print(f"Consistency Score: {report.consistency_score}")
 ```
 
 ### Example Output

@@ -23,11 +23,11 @@ taxonomy = taxonomy_builder.build(results)
 print(f"Found {len(taxonomy.clusters)} distinct failure modes.")
 
 for cluster in taxonomy.clusters:
-    print(f"\nCluster: {cluster.name} ({cluster.size} failures)")
-    print(f"Root Cause: {cluster.root_cause}")
-    print(f"Suggested Fix: {cluster.suggested_fix}")
+    print(f"\nCluster: {cluster.name} ({cluster.count} failures)")
+    print(f"Root Cause: {cluster.trigger}")
+    print(f"Suggested Fix: {cluster.fix}")
     print("Example Queries:")
-    for query in cluster.example_queries[:3]:
+    for query in cluster.example_evidence[:3]:
         print(f" - {query}")
 ```
 

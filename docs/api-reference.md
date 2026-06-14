@@ -164,7 +164,7 @@ class EvalResult:
 from rageval import RunTracker
 
 tracker = RunTracker()  # creates .rageval/runs.db
-tracker.save_run(name="v2.3", results=results)
+tracker.save_run(run_name="v2.3", results=results)
 tracker.list_runs()
 tracker.compare_runs("v2.2", "v2.3")
 ```
@@ -206,8 +206,9 @@ print(report.root_cause_hypothesis)
 ```python
 from rageval import RAGTracer
 
-tracer = RAGTracer(judge=judge)
-with tracer.trace(query=query) as trace:
+tracer = RAGTracer(metrics=[])
+with tracer.trace(trace_id="req-123") as trace:
+    trace._current_step.inputs["query"] = query
     trace.log_retrieval(docs=docs)
     trace.log_generation(answer=answer)
 result = tracer.evaluate_trace(trace)

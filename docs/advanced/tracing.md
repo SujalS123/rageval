@@ -9,13 +9,14 @@ from rageval import RAGTracer
 from rageval.judges.anthropic_judge import AnthropicJudge
 
 judge = AnthropicJudge()
-tracer = RAGTracer(judge=judge)
+tracer = RAGTracer(metrics=[])
 ```
 
 ## Wrapping your pipeline
 
 ```python
-with tracer.trace(query="What is the boiling point of water?") as trace:
+with tracer.trace(trace_id="What is the boiling point of water?") as trace:
+    trace._current_step.inputs["query"] = "What is the boiling point of water?"
     # Step 1 — retrieval
     docs = retriever.search(query)
     trace.log_retrieval(docs=[d.page_content for d in docs])
