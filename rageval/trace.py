@@ -193,7 +193,7 @@ class RAGTracer:
                     result = metric.score(sample)
                     step_metric_results[metric.name] = result
                     step.metric_results[metric.name] = result
-                except Exception as e:
+                except Exception:
                     pass
 
             step_results[step.name] = {

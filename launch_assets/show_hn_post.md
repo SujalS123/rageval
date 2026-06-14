@@ -1,4 +1,4 @@
-**Title:** Show HN: rageval – RAG evaluation that returns evidence, not just a score
+**Title:** Show HN: rageval â€“ RAG evaluation that returns evidence, not just a score
 
 **Post Body:**
 Hey HN,
@@ -16,8 +16,8 @@ A few other design decisions I made:
 
 It's MIT licensed and available via `pip install rageval`. 
 
-Repo: https://github.com/sujalsonawane/rageval
-Docs: https://sujalsonawane.github.io/rageval/
+Repo: https://github.com/SujalS123/rageval
+Docs: https://SujalS123.github.io/rageval/
 
 I'd love to hear your feedback on the API design and what metrics/judges you'd like to see next.
 
@@ -29,6 +29,6 @@ A quick example of what the terminal output looks like when it catches a halluci
 Reasoning: 1 of 1 claims could not be verified from the context.
  Evidence:
  - FACTUAL_ERROR: 'Romeo and Juliet was written by Charles Dickens'
-   (severity: 1.0) — Context states William Shakespeare
+   (severity: 1.0) â€” Context states William Shakespeare
 ```
 It gives you the diagnosis, not just the score. Happy to answer any questions about how the claim extraction works under the hood!

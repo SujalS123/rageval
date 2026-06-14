@@ -1,7 +1,7 @@
 # rageval/consistency.py
 
 from dataclasses import dataclass, field
-from typing import Callable, Optional
+from typing import Callable
 
 from rageval.judges.base import BaseJudge
 from rageval.metrics.faithfulness import CLAIM_EXTRACTION_PROMPT

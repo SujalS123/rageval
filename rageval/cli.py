@@ -74,7 +74,7 @@ def run(
     """
     from rageval.core.sample import RAGSample
     from rageval.core.pipeline import batch_evaluate
-    from rageval.reporters.json_csv import to_json, print_summary
+    from rageval.reporters.json_csv import to_json
 
     # ── Load data ────────────────────────────────────────────────────────
     if not data.exists():
@@ -328,7 +328,6 @@ def init_ci(
     eval_file: str = typer.Option("eval_data.json", "--eval-file", help="Eval data file path"),
 ):
     """Generate a GitHub Actions workflow file for CI/CD RAG evaluation."""
-    import os
 
     secret_map = {
         "openai": "OPENAI_API_KEY",
@@ -479,7 +478,6 @@ def prompts_register(
     db: str = typer.Option(".rageval/runs.db", "--db", help="Path to tracker database"),
 ):
     """Register a prompt version from stdin."""
-    import sys
     from rageval.prompt_vc import PromptVersionControl
     console.print("Paste prompt text, then press Ctrl+D (Unix) or Ctrl+Z (Windows):")
     prompt_text = sys.stdin.read()

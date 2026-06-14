@@ -2,7 +2,6 @@
 
 import math
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass
@@ -16,7 +15,7 @@ class DriftReport:
 
     def summary(self) -> str:
         lines = [
-            f"Semantic Drift Report",
+            "Semantic Drift Report",
             f"Drift score: {self.drift_score:.3f}",
             f"Uncovered queries: {self.uncovered_query_count} "
             f"({self.uncovered_query_percentage*100:.1f}%)",

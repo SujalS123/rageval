@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rageval"
 version = "0.5.0"
-description = "RAG evaluation with evidence — see which sentence hallucinated, not just a score"
+description = "RAG evaluation with evidence â€” see which sentence hallucinated, not just a score"
 authors = [
-    { name="Sujal Sonawane", email="sujalsonawane28@gmail.com" }
+    { name="Sujal Sonawane", email="SujalS12328@gmail.com" }
 ]
 readme = "README.md"
 license = "MIT"
@@ -31,8 +31,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/sujalsonawane/rageval"
-Repository = "https://github.com/sujalsonawane/rageval"
+Homepage = "https://github.com/SujalS123/rageval"
+Repository = "https://github.com/SujalS123/rageval"
 
 [project.optional-dependencies]
 dev = [
@@ -78,6 +78,10 @@ exclude = ["site*", "docs*", "tests*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
 
 [tool.setuptools.package-data]
 rageval = ["py.typed"]

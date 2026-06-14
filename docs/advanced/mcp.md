@@ -1,33 +1,42 @@
-# MCP Server Setup
+# MCP Server (Model Context Protocol)
 
-rageval includes a Model Context Protocol (MCP) server. This allows AI coding assistants like Claude Desktop, Cursor, and Windsurf to directly run RAG evaluations, check history, and debug failing pipelines for you.
+`rageval` ships with a built-in Model Context Protocol (MCP) server. This allows AI coding assistants like Claude Desktop, Cursor, and Windsurf to automatically evaluate the RAG pipelines they build for you.
+
+When enabled, your AI assistant can:
+1. Run `rageval_evaluate` directly from the chat interface.
+2. See exactly which sentences hallucinated.
+3. Automatically rewrite the retriever or prompt based on the failure evidence.
 
 ## Installation
-
-Ensure you have installed the `mcp` extra:
 
 ```bash
 pip install rageval[mcp]
 ```
 
-## Available Tools
+## Configuration
 
-Once configured, your AI assistant will have access to:
-- `evaluate_sample` — Run metrics on a specific query/docs/answer combo.
-- `batch_evaluate` — Run metrics across a JSON dataset.
-- `get_run_history` — Check if your pipeline degraded recently.
-- `analyze_consistency` — Check if paraphrases break the pipeline.
+Add the `rageval` server to your assistant's configuration file.
 
-## Claude Desktop Configuration
+### Cursor
 
-Edit your `claude_desktop_config.json` (usually at `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS or `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+Add this to Cursor's MCP configuration settings (Cursor Settings > Features > MCP):
+
+* **Name:** `rageval`
+* **Type:** `command`
+* **Command:** `python -m rageval.mcp_server`
+
+### Claude Desktop
+
+Edit your `claude_desktop_config.json`:
+* Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+* Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "rageval": {
-      "command": "rageval",
-      "args": ["serve"],
+      "command": "python",
+      "args": ["-m", "rageval.mcp_server"],
       "env": {
         "ANTHROPIC_API_KEY": "your-api-key"
       }
@@ -36,33 +45,25 @@ Edit your `claude_desktop_config.json` (usually at `~/Library/Application Suppor
 }
 ```
 
-## Cursor Configuration
+### Windsurf
 
-1. Open Cursor Settings (Cmd/Ctrl + ,)
-2. Navigate to **Features** > **MCP Servers**
-3. Click **+ Add new MCP server**
-4. Configure as follows:
-   - **Name**: rageval
-   - **Type**: command
-   - **Command**: `rageval serve`
-5. Make sure your environment variables (like `OPENAI_API_KEY`) are set in your terminal or `.env` file where Cursor runs.
-
-## Windsurf Configuration
-
-Edit your `mcp_config.json` (usually at `~/.codeium/windsurf/mcp_config.json`):
+Add this to `~/.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
   "mcpServers": {
     "rageval": {
-      "command": "rageval",
-      "args": ["serve"],
-      "env": {
-        "OPENAI_API_KEY": "your-api-key"
-      }
+      "command": "python",
+      "args": ["-m", "rageval.mcp_server"]
     }
   }
 }
 ```
 
-Once configured, try asking your assistant: "Run a rageval evaluation on `eval_data.json` and tell me which metrics are failing."
+## Available Tools
+
+Once connected, your AI assistant will have access to:
+
+* `rageval_evaluate`: Runs full evaluation (Faithfulness, ContextPrecision, AnswerRelevancy) on a provided sample and returns the exact hallucination evidence.
+* `rageval_batch`: Runs evaluation across multiple samples concurrently.
+* `rageval_get_history`: Reads the local SQLite database to analyze historical regressions.

@@ -1,7 +1,6 @@
 # rageval/prompt_vc.py
 
 import difflib
-import json
 import math
 import sqlite3
 from dataclasses import dataclass, field

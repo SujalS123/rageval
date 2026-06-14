@@ -1,7 +1,6 @@
 # rageval/dataset.py
 
 import json
-import random
 from pathlib import Path
 from rageval.judges.base import BaseJudge
 
@@ -107,7 +106,7 @@ class EvalDatasetGenerator:
                     )
                 )
                 generated = result.get("questions", [])[:n_for_this_doc]
-            except Exception as e:
+            except Exception:
                 # Skip this document on failure rather than aborting the whole run
                 generated = []
 

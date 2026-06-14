@@ -1,8 +1,8 @@
 """
-rageval — Framework-agnostic RAG evaluation with debug-first scores.
+rageval â€” Framework-agnostic RAG evaluation with debug-first scores.
 
 Every metric returns a score AND the specific evidence that caused it.
-Not just faithfulness: 0.43 — but which sentences hallucinated.
+Not just faithfulness: 0.43 â€” but which sentences hallucinated.
 
 Quickstart:
     from rageval import evaluate, RAGSample
@@ -19,13 +19,13 @@ Quickstart:
     )
     print(result.summary())
 
-Documentation: https://sujalsonawane.github.io/rageval
+Documentation: https://SujalS123.github.io/rageval
 PyPI: https://pypi.org/project/rageval
 """
 
 from rageval.core.sample import RAGSample
 from rageval.core.result import MetricResult, EvalResult
-from rageval.core.pipeline import evaluate, batch_evaluate, summary
+from rageval.core.pipeline import evaluate, batch_evaluate, summary, aevaluate
 from rageval.tracker import RunTracker
 from rageval.dataset import EvalDatasetGenerator
 from rageval.autoeval import AutoEval
@@ -45,6 +45,7 @@ __all__ = [
     "MetricResult",
     "EvalResult",
     "evaluate",
+    "aevaluate",
     "batch_evaluate",
     "summary",
     "RunTracker",

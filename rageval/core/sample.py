@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, Union
+from typing import Optional
 from rageval.core.retrieved_doc import RetrievedDoc
 
 

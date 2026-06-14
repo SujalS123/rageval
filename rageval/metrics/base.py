@@ -78,6 +78,15 @@ class BaseMetric(ABC):
         """
         raise NotImplementedError
 
+    async def ascore(self, sample: RAGSample) -> MetricResult:
+        """
+        Async version of score. 
+        Default implementation runs the synchronous score() in a thread pool.
+        Subclasses can override this for native async LLM calls.
+        """
+        import asyncio
+        return await asyncio.to_thread(self.score, sample)
+
     def _make_result(
         self,
         score: float,

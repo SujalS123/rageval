@@ -2,7 +2,6 @@
 
 import math
 from dataclasses import dataclass, field
-from typing import Optional
 
 from rageval.judges.base import BaseJudge
 
@@ -139,7 +138,6 @@ class FailureTaxonomyBuilder:
         """Return a list of embedding vectors. Falls back to char n-gram if no model."""
         if self.embedding_judge is not None:
             try:
-                import numpy as np
                 all_texts = texts
                 embeddings = self.embedding_judge.model.encode(all_texts)
                 return [emb.tolist() for emb in embeddings]

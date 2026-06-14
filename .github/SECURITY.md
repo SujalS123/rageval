@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 If you find a security issue in rageval, please email
-sujalsonawane28@gmail.com rather than opening a public GitHub issue.
+SujalS12328@gmail.com rather than opening a public GitHub issue.
 
 We will respond within 48 hours.
 

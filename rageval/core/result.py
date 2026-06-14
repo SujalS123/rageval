@@ -4,7 +4,6 @@ import json
 
 if TYPE_CHECKING:
     from rageval.core.sample import RAGSample
-    from rageval.core.hallucination import Hallucination
 
 @dataclass
 class MetricResult:

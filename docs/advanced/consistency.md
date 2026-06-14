@@ -1,82 +1,58 @@
 # Consistency Analysis
 
-Inconsistent answers to semantically identical questions are one of the most common sources of user complaints in production RAG systems. Users ask "How do I reset my password?" and get a helpful guide, then later ask "Password reset instructions" and get "I don't know."
+A major problem with RAG systems is semantic fragility. A user asks "How do I reset my password?" and gets a perfect answer. Another user asks "Password reset instructions?" and the pipeline completely fails.
 
-`ConsistencyAnalyzer` measures whether your pipeline returns consistent answers when the same question is asked in different ways, and helps identify *why* it failed.
+`rageval` includes a `ConsistencyAnalyzer` to measure how robust your pipeline is to phrasing variations.
 
-## The Problem: Paraphrase Instability
+## How it works
 
-Consider a user trying to find the refund policy:
+1. It takes your base query and automatically generates `N` semantic paraphrases.
+2. It feeds each paraphrase into your RAG pipeline function.
+3. It compares all generated answers against each other to check for contradictions or factual drift.
 
-1. **Query A:** "What is the refund policy?" -> Pipeline returns 30 days.
-2. **Query B:** "Can I get my money back?" -> Pipeline says "I cannot answer that."
+## Worked Example
 
-Did the retriever fail to find the document because the keywords changed? Or did the LLM just fail to generate a confident answer despite having the right documents?
-
-## Tutorial: Real Worked Example
-
-Here is how you use `ConsistencyAnalyzer` to catch this exact issue before users do.
+Here is how you use the `ConsistencyAnalyzer` to test a custom RAG pipeline function.
 
 ```python
-from rageval import ConsistencyAnalyzer, RAGSample
-from rageval.judges.openai_judge import OpenAIJudge
-from rageval.judges.heuristic import HeuristicJudge
+from rageval.consistency import ConsistencyAnalyzer
+from rageval.judges.anthropic_judge import AnthropicJudge
 
-# We need a judge for generation (LLM) and a judge for embeddings (Heuristic)
-analyzer = ConsistencyAnalyzer(
-    judge=OpenAIJudge(),
-    embedding_judge=HeuristicJudge()
-)
+# 1. Define your RAG pipeline as a standard Python function
+def my_rag_pipeline(query: str) -> str:
+    # Example logic using your preferred framework
+    docs = my_vector_db.search(query)
+    response = my_llm.generate(prompt=f"Answer {query} using {docs}")
+    return response
 
-# You must wrap your existing pipeline in a function that takes a query
-# and returns a RAGSample.
-def my_production_pipeline(query: str) -> RAGSample:
-    # 1. Your actual retriever
-    docs = my_retriever.search(query)
-    
-    # 2. Your actual generator
-    answer = my_llm.generate(query, docs)
-    
-    return RAGSample(
-        query=query,
-        retrieved_docs=docs,
-        answer=answer
-    )
+# 2. Initialize the analyzer
+judge = AnthropicJudge()
+analyzer = ConsistencyAnalyzer(judge=judge)
 
-# Run the analyzer
+# 3. Test a query for consistency
 report = analyzer.analyze(
-    query="What is the refund policy?",
-    paraphrases=[
-        "Can I get my money back?",
-        "Tell me about refunds.",
-    ],
-    pipeline_fn=my_production_pipeline,
+    base_query="What is the speed of light?",
+    pipeline_fn=my_rag_pipeline,
+    num_paraphrases=3  # It will generate 3 variations of the query
 )
 
-print(f"Consistency Score: {report.consistency_score}")
-print(f"Root Cause Hypothesis:\n{report.root_cause_hypothesis}")
+print(f"Consistency Score: {report.score}")
 ```
 
-## The Report Output
+### Example Output
 
-If the pipeline is robust, `consistency_score` will be `1.0`.
-
-But if we hit the paraphrase instability issue mentioned above, the output will look like this:
+If your pipeline is fragile, `ConsistencyAnalyzer` will catch it:
 
 ```text
 Consistency Score: 0.33
-Root Cause Hypothesis:
-Low document similarity (0.41) between paraphrases suggests vocabulary mismatch in the embedding model. "Can I get my money back?" failed to retrieve the policy document that "What is the refund policy?" successfully found.
+Failed Paraphrases:
+1. "Can you tell me how fast light travels?"
+   - Pipeline answered: "Light travels at 186,000 miles per second."
+   - Contradicts base answer: "The speed of light is exactly 299,792,458 meters per second."
 
-Suggested Fix:
-Try query expansion (HyDE) before retrieval, or switch to an embedding model with better semantic understanding rather than keyword reliance.
+2. "What is light's speed limit?"
+   - Pipeline answered: "I'm sorry, I don't have information about traffic limits."
+   - Contradicts base answer: Answer drifted off-topic entirely.
 ```
 
-### How it works
-
-1. It runs `my_production_pipeline` on the original query and every paraphrase.
-2. It extracts atomic claims from each answer using the LLM.
-3. It cross-compares every pair of answers to find contradictions or omissions.
-4. If it detects an inconsistency, it looks at the *retrieved documents*:
-    - **Different documents retrieved?** The root cause is *vocabulary mismatch* (retriever issue).
-    - **Same documents retrieved?** The root cause is *generation instability* (LLM/prompt issue).
+By adding `ConsistencyAnalyzer` to your testing suite, you can ensure your prompt engineering and vector retrieval logic handle human unpredictability before you deploy.

@@ -1,8 +1,8 @@
 site_name: rageval
 site_description: Framework-agnostic RAG evaluation with debug-first scores
-site_url: https://YOUR_GITHUB_USERNAME.github.io/rageval
-repo_url: https://github.com/YOUR_GITHUB_USERNAME/rageval
-repo_name: YOUR_GITHUB_USERNAME/rageval
+site_url: https://SujalS123.github.io/rageval
+repo_url: https://github.com/SujalS123/rageval
+repo_name: SujalS123/rageval
 
 theme:
   name: material
@@ -43,6 +43,7 @@ nav:
   - Advanced:
     - Batch Evaluation: advanced/batch.md
     - RAG Pipeline Tracing: advanced/tracing.md
+    - Semantic Drift Detection: advanced/drift.md
     - Regression Tracking: advanced/regression.md
     - Consistency Analysis: advanced/consistency.md
     - Production Monitoring: advanced/autoeval.md
@@ -51,6 +52,7 @@ nav:
     - MCP Server: advanced/mcp.md
   - CI/CD Integration: cicd.md
   - API Reference: api-reference.md
+  - FAQ: faq.md
   - Changelog: changelog.md
 
 markdown_extensions:

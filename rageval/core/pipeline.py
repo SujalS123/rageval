@@ -90,6 +90,67 @@ def evaluate(
         latency_ms=round(latency_ms,1),
     )
     
+async def aevaluate(
+        sample: RAGSample,
+        metrics: list[BaseMetric],
+        weights: dict[str,float] = None,
+) -> EvalResult:
+    """
+    Async version of evaluate(). Use in FastAPI, async pipelines.
+    Runs all metrics concurrently using asyncio.gather.
+    """
+    import asyncio
+    import time
+
+    if not metrics:
+        raise ValueError(
+            "You must provide at least one metric. "
+            "Example: metrics=[Faithfulness(judge=judge)]"
+        )
+    
+    start_time = time.time()
+    
+    async def safe_ascore(metric):
+        try:
+            return metric.name, await metric.ascore(sample)
+        except Exception as e:
+            return metric.name, MetricResult(
+                metric_name=metric.name,
+                score=0.0,
+                passed=False,
+                reasoning=f"Metric crashed: {type(e).__name__}: {str(e)}",
+                evidence=[],
+                threshold=metric.threshold,
+            )
+
+    tasks = [safe_ascore(metric) for metric in metrics]
+    results = await asyncio.gather(*tasks)
+    
+    metric_results = dict(results)
+    latency_ms = (time.time() - start_time) * 1000
+
+    # Compute weighted overall score
+    w = weights or {m.name: 1.0 for m in metrics}
+    total_weight = sum(w.get(name, 1.0) for name in metric_results)
+    
+    if total_weight > 0:
+        overall_score = sum(
+            r.score * w.get(name, 1.0)
+            for name, r in metric_results.items()      
+        ) / total_weight
+    else:
+        overall_score = 0.0
+        
+    all_passed = all(r.passed for r in metric_results.values())
+
+    return EvalResult(
+        sample=sample,
+        metric_results=metric_results,
+        overall_score=round(overall_score, 4),
+        passed=all_passed,
+        latency_ms=round(latency_ms, 1),
+    )
+
 def batch_evaluate(
         samples: list[RAGSample],
         metrics : list[BaseMetric],
@@ -130,7 +191,7 @@ def batch_evaluate(
             i = future_to_index[future]
             try:
                 results[i] = future.result()
-            except Exception as e:
+            except Exception:
                 # Should never happen since evaluate() never raises
                 # But just incase , create a failes result
                 results[i] = EvalResult(

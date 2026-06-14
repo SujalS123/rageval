@@ -1,9 +1,7 @@
 # rageval/chunk_analyzer.py
 
-import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
 
 
 class ChunkIssueType(str, Enum):
@@ -37,7 +35,7 @@ class ChunkQualityReport:
 
     def summary(self) -> str:
         lines = [
-            f"Chunk Quality Report",
+            "Chunk Quality Report",
             f"Total chunks: {self.total_chunks}",
             f"Quality score: {self.quality_score:.2f}",
             f"Total issues: {len(self.issues)}",

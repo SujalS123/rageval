@@ -1,10 +1,7 @@
 # rageval/explainer.py
 
-import json
-import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 from rageval.core.sample import RAGSample
 from rageval.core.result import EvalResult

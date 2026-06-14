@@ -14,7 +14,7 @@ A number tells you that something is wrong, but it doesn't tell you *what* is wr
 
 To fix it, you still have to manually read through hundreds of LLM outputs to figure out why the score is 0.43. 
 
-I spent two weeks doing exactly this manually. I decided there had to be a better way, so I built **[rageval](https://github.com/sujalsonawane/rageval)**.
+I spent two weeks doing exactly this manually. I decided there had to be a better way, so I built **[rageval](https://github.com/SujalS123/rageval)**.
 
 ## Not just a score. The specific evidence.
 
@@ -31,7 +31,7 @@ Overall: 0.00 | FAILED | 1240ms
 Reasoning: 1 of 1 claims could not be verified from the context.
  Evidence:
  - FACTUAL_ERROR: 'Romeo and Juliet was written by Charles Dickens'
-   (severity: 1.0) — Context states William Shakespeare
+   (severity: 1.0) â€” Context states William Shakespeare
 -------------------------------------------------------
 ```
 
@@ -82,4 +82,4 @@ rageval is open-source and MIT-licensed.
 pip install rageval
 ```
 
-Check out the [GitHub repo](https://github.com/sujalsonawane/rageval) and drop a star if you find it useful. I built this to solve a pain point I experienced firsthand, and I'd love to hear your feedback on it. Let me know what you think in the comments!
+Check out the [GitHub repo](https://github.com/SujalS123/rageval) and drop a star if you find it useful. I built this to solve a pain point I experienced firsthand, and I'd love to hear your feedback on it. Let me know what you think in the comments!
